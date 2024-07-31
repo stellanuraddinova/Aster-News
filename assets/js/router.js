@@ -1,26 +1,42 @@
 class Router {
-    constructor(){
-        this.routes = {};
-        this.rootElement = document.querySelector('#root')
-        window.addEventListener('hashchange', this.hasChange.bind(this));
-        window.addEventListener('load', this.hasChange.bind(this));
-    }
+  constructor() {
+    this.routes = {};
+    this.rootElement = document.querySelector("#root");
+    window.addEventListener("hashchange", this.hasChange.bind(this));
+    window.addEventListener("load", this.hasChange.bind(this));
+  }
 
-    hasChange(){
-        const hash = window.location.hash.slice(1);
-        const url = this.routes[hash];
-        
-        this.loadPage(url);
-    }
+  hasChange() {
+    const [url, param] = window.location.hash.slice(1).split('/');
+    const page = this.routes[url];
+    
 
-    async loadPage(url){
-        const res = await fetch(`/pages/${url}`)
-        const html = await res.text(); 
-        console.log(html);
-        this.rootElement.innerHTML = html;
+    if (!url) {
+      window.location.href = "#home";
     }
-    addRoute(name, callback){
-        this.routes[name] = callback;
+    if (page && page.url) {
+      this.loadPage(page.url, {
+        callback: page.callback,
+        param
+      });
+    } else {
+      this.loadPage("error.html");
     }
+  }
+
+  async loadPage(url, option ) {
+    const res = await fetch(`/pages/${url}`);
+    const html = await res.text();
+    this.rootElement.innerHTML = html;
+    if (option && option.callback) {
+        option.callback(option.param);
+    }
+  }
+  addRoute(name, url, callback) {
+    this.routes[name] = {
+      url,
+      callback,
+    };
+  }
 }
 export default Router;
