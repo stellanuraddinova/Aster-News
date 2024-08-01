@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aster News</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
@@ -25,12 +26,12 @@
 
     <div class="flex justify-between">
         <section>
-            <div class="pt-[21px] pl-[31px] flex gap-x-[15px] items-center w-[260px]">
+            <a href="#home" class="pt-[21px] pl-[31px] flex gap-x-[15px] items-center w-[260px]">
                 <figure class="w-[29px] h-[35px]">
                     <img class="w-full h-full" src="./assets/img/logo.svg" alt="">
                 </figure>
                 <h1 class="font-bold text-[18px] text-[#0768B5]">Aster News</h1>
-            </div>
+            </a>
 
             <div class="w-[260px]">
                 <div class="mt-[28px] flex flex-col gap-y-[16px] border-b-[1px] border-[#7D93A1] mr-[17px]">
@@ -130,7 +131,12 @@
                     <img src="./assets/img/arrow-right.svg" alt="">
                 </div>
             </div>
-            <div id="root"></div>
+            <div class="">
+                <div id="root"></div>
+                <div id="loading" class="display:none h-screen flex items-center justify-center">
+                    <img src="./assets/img/Spinner@1x-1.0s-200px-200px.svg" alt="">
+                </div>
+            </div>
 
             <footer class="py-[29px] flex justify-between text-[12px] opacity-40  border-t-[1px]  border-[#7D93A1]">
                 <div>© Aster News, 2022</div>

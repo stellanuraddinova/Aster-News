@@ -7,9 +7,8 @@ class Router {
   }
 
   hasChange() {
-    const [url, param] = window.location.hash.slice(1).split('/');
+    const [url, param] = window.location.hash.slice(1).split("/");
     const page = this.routes[url];
-    
 
     if (!url) {
       window.location.href = "#home";
@@ -17,21 +16,22 @@ class Router {
     if (page && page.url) {
       this.loadPage(page.url, {
         callback: page.callback,
-        param
+        param,
       });
     } else {
       this.loadPage("error.html");
     }
   }
 
-  async loadPage(url, option ) {
+  async loadPage(url, option) {
     const res = await fetch(`/pages/${url}`);
     const html = await res.text();
     this.rootElement.innerHTML = html;
     if (option && option.callback) {
-        option.callback(option.param);
+      option.callback(option.param);
     }
   }
+
   addRoute(name, url, callback) {
     this.routes[name] = {
       url,

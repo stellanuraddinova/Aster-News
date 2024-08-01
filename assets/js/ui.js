@@ -1,7 +1,5 @@
-
-
 export const uiNewsItem = (item) => {
-    return `
+  return `
         <div class="relative h-[191px] p-[15px] rounded-[4px] bg-white">
             <a class= "absolute inset-0" href="#news/${item.slug}"></a>
             <div class="text-[#072D4B] flex items-center justify-between gap-x-[18px] mb-[8px]">
@@ -39,5 +37,17 @@ export const uiNewsItem = (item) => {
                 </div>
             </div>
         </div>
-    `
-}
+    `;
+};
+
+export const uiLoading = (type) => {
+  const root = document.querySelector("#root");
+  const loading = document.querySelector("#loading");
+  if(type==='show'){
+    root.style.display = 'none'
+    loading.style.display = 'flex'
+  }else{
+    root.style.display = 'block'
+    loading.style.display = 'none'
+  }
+};
