@@ -1,11 +1,20 @@
+import { menuComponent } from "./component.js";
+import { objectToQueryParams, queryParams } from "./helper.js";
 import Router from "./router.js";
 import { serviceFetchNews, serviceFetchNewsView } from "./service.js";
 import { uiLoading, uiNewsItem } from "./ui.js";
 const router = new Router();
 
+const componentRender = () => {
+  menuComponent();
+};
+
+componentRender();
+
 router.addRoute("home", "home.html", async () => {
-  const newsContent = document.querySelector("#newsContent");
   const showMore = document.querySelector("#showMore");
+
+
   const fetchNews = async (page=1) => {
     if(page ===1) uiLoading("show");
     const res = await serviceFetchNews(page);
@@ -47,3 +56,31 @@ router.addRoute("news", "news.html", async (slug) => {
     date.innerHTML = moment(news.published_date).format("DD-MM-YYYY HH:mm");
   }
 });
+
+router.addRoute('search', 'search.html', () => {
+  componentRender();
+  const newsContent = document.querySelector("#newsContent");
+
+  const category = queryParams('category')
+
+  const query = objectToQueryParams({
+    category,
+    page: 1
+  });
+ 
+  const fetchNews = async () => {
+    uiLoading("show");
+    const query = objectToQueryParams({
+      page
+    })
+    const res = await serviceFetchNews(query);
+    uiLoading("hide");
+    if(page === 1){
+        newsContent.innerHTML = "";
+    }
+    res.data.forEach((item) => {
+      newsContent.innerHTML += uiNewsItem(item);
+    });
+  };
+  fetchNews();
+})
